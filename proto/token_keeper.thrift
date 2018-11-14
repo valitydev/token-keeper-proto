@@ -7,6 +7,8 @@ namespace erlang token_keeper
 
 include "base.thrift"
 
+typedef string JWT
+
 enum TokenStatus {
     active,
     revoked
@@ -42,7 +44,7 @@ struct Scope {
 
 struct Token {
     1: required base.ID                id
-    2: required string                 token
+    2: required JWT                    token
     3: required TokenStatus            status
     4: required Scope                  scope
 }
@@ -72,7 +74,7 @@ service TokenKeeper {
     /**
     * Получить токен.
     **/
-    Token Get (1: string token)
+    Token Get (1: JWT jwt)
         throws (
             1: InvalidRequest ex1
     )

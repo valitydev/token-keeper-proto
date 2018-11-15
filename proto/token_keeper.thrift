@@ -7,10 +7,11 @@ namespace erlang token_keeper
 
 include "base.thrift"
 
-typedef string JWT
+typedef base.ID TokenID
+typedef string Token
 
 enum TokenStatus {
-    active,
+    active
     revoked
 }
 
@@ -24,7 +25,7 @@ struct RoleStorage {
 /**
  * Ссылка на party/shop.
 **/
-struct Refference {
+struct Reference {
     1: optional string shop_id
     2: optional string party_id
 }
@@ -38,13 +39,13 @@ struct Scope {
     3: optional string email
     4: optional string given_name
     5: optional string family_name
-    6: required Refference refference
+    6: required Reference reference
     7: optional map<string, RoleStorage> resource_access
 }
 
-struct Token {
-    1: required base.ID                id
-    2: required JWT                    token
+struct TokenData {
+    1: required TokenID                id
+    2: required Token                  token
     3: required TokenStatus            status
     4: required Scope                  scope
 }
@@ -53,12 +54,18 @@ exception InvalidRequest {
     1: required list<string> errors
 }
 
+exception TokenNotFound {}
+
+exception TokenExpired {
+    1: required TokenID token_id
+}
+
 service TokenKeeper {
 
     /**
     * Создать новый оффлайн токен.
     **/
-    Token CreateOffline (1: Scope scope)
+    TokenData Create (1: Scope scope)
         throws (
             1: InvalidRequest ex1
     )
@@ -66,25 +73,37 @@ service TokenKeeper {
     /**
     * Создать новый токен с ограниченным временем жизни.
     **/
-    Token Create (1: Scope scope, 2: base.Timestamp exp_time)
+    TokenData CreateWithExpiration (1: Scope scope, 2: base.Timestamp exp_time)
         throws (
             1: InvalidRequest ex1
     )
 
     /**
-    * Получить токен.
+    * Получить данные токена по токену.
     **/
-    Token Get (1: JWT jwt)
+    TokenData GetByToken (1: Token token)
         throws (
-            1: InvalidRequest ex1
+            1: InvalidRequest ex1,
+            2: TokenNotFound ex2,
+            3: TokenExpired ex3
+    )
+
+    /**
+    * Получить данные токена по идентификатору.
+    **/
+    TokenData Get (1: TokenID id)
+        throws (
+            1: InvalidRequest ex1,
+            2: TokenNotFound ex2
     )
 
     /**
     * Деактивировать оффлайн токен.
     **/
-    Token Revoke (1: base.ID id)
+    void Revoke (1: TokenID id)
         throws (
-            1: InvalidRequest ex1
+            1: InvalidRequest ex1,
+            2: TokenNotFound ex2
     )
 
 }

@@ -48,10 +48,6 @@ struct AuthData {
     5: required Scope                  scope
 }
 
-exception InvalidRequest {
-    1: required list<string> errors
-}
-
 exception TokenNotFound {}
 
 service TokenKeeper {
@@ -60,24 +56,18 @@ service TokenKeeper {
     * Создать новый оффлайн токен.
     **/
     AuthData Create (1: Scope scope)
-        throws (
-            1: InvalidRequest ex1
-    )
 
     /**
     * Создать новый токен с ограниченным временем жизни.
     **/
     AuthData CreateWithExpiration (1: Scope scope, 2: TokenExpTime exp_time)
-        throws (
-            1: InvalidRequest ex1
-    )
 
     /**
     * Получить данные токена по токену.
     **/
     AuthData GetByToken (1: Token token)
         throws (
-            1: TokenNotFound ex2
+            1: TokenNotFound ex1
     )
 
     /**
@@ -85,7 +75,7 @@ service TokenKeeper {
     **/
     AuthData Get (1: TokenID id)
         throws (
-            1: TokenNotFound ex2
+            1: TokenNotFound ex1
     )
 
     /**
@@ -93,7 +83,7 @@ service TokenKeeper {
     **/
     void Revoke (1: TokenID id)
         throws (
-            1: TokenNotFound ex2
+            1: TokenNotFound ex1
     )
 
 }

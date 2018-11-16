@@ -8,7 +8,9 @@ namespace erlang token_keeper
 include "base.thrift"
 
 typedef base.ID TokenID
+typedef base.ID SubjectID
 typedef string Token
+typedef string Realm
 typedef base.Timestamp TokenExpTime
 typedef map<string, string> Metadata
 
@@ -38,8 +40,6 @@ struct Reference {
 struct Scope {
     1: required Reference reference
     2: optional map<string, RoleStorage> resource_access
-    3: required string sub_id
-    4: required string sub_realm
 }
 
 struct AuthData {
@@ -49,6 +49,8 @@ struct AuthData {
     4: required TokenExpTime           exp_time
     5: required Scope                  scope
     6: required Metadata               metadata
+    7: required SubjectID              subject_id
+    8: required Realm                  realm
 }
 
 exception TokenNotFound {}
@@ -58,12 +60,12 @@ service TokenKeeper {
     /**
     * Создать новый оффлайн токен.
     **/
-    AuthData Create (1: Scope scope, 2: Metadata metadata)
+    AuthData Create (1: Scope scope, 2: Metadata metadata, 3: SubjectID subject_id, 4: Realm realm)
 
     /**
     * Создать новый токен с ограниченным временем жизни.
     **/
-    AuthData CreateWithExpiration (1: Scope scope, 2: Metadata metadata, 3: TokenExpTime exp_time)
+    AuthData CreateWithExpiration (1: Scope scope, 2: Metadata metadata, 3: SubjectID subject_id, 4: Realm realm 5: TokenExpTime exp_time)
 
     /**
     * Получить данные токена по токену.

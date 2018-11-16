@@ -9,6 +9,7 @@ include "base.thrift"
 
 typedef base.ID TokenID
 typedef string Token
+typedef base.Timestamp TokenExpTime
 
 enum TokenStatus {
     active
@@ -34,20 +35,17 @@ struct Reference {
  * Информация связанная с токеном.
 **/
 struct Scope {
-    1: optional string name
-    2: optional string preferred_username
-    3: optional string email
-    4: optional string given_name
-    5: optional string family_name
-    6: required Reference reference
-    7: optional map<string, RoleStorage> resource_access
+    1: required Reference reference
+    2: optional map<string, RoleStorage> resource_access
+    3: required map<string, string> metadata
 }
 
-struct TokenData {
+struct AuthData {
     1: required TokenID                id
     2: required Token                  token
     3: required TokenStatus            status
-    4: required Scope                  scope
+    4: required TokenExpTime           exp_time
+    5: required Scope                  scope
 }
 
 exception InvalidRequest {
@@ -56,16 +54,12 @@ exception InvalidRequest {
 
 exception TokenNotFound {}
 
-exception TokenExpired {
-    1: required TokenID token_id
-}
-
 service TokenKeeper {
 
     /**
     * Создать новый оффлайн токен.
     **/
-    TokenData Create (1: Scope scope)
+    AuthData Create (1: Scope scope)
         throws (
             1: InvalidRequest ex1
     )
@@ -73,7 +67,7 @@ service TokenKeeper {
     /**
     * Создать новый токен с ограниченным временем жизни.
     **/
-    TokenData CreateWithExpiration (1: Scope scope, 2: base.Timestamp exp_time)
+    AuthData CreateWithExpiration (1: Scope scope, 2: TokenExpTime exp_time)
         throws (
             1: InvalidRequest ex1
     )
@@ -81,20 +75,17 @@ service TokenKeeper {
     /**
     * Получить данные токена по токену.
     **/
-    TokenData GetByToken (1: Token token)
+    AuthData GetByToken (1: Token token)
         throws (
-            1: InvalidRequest ex1,
-            2: TokenNotFound ex2,
-            3: TokenExpired ex3
+            1: TokenNotFound ex2
     )
 
     /**
     * Получить данные токена по идентификатору.
     **/
-    TokenData Get (1: TokenID id)
+    AuthData Get (1: TokenID id)
         throws (
-            1: InvalidRequest ex1,
-            2: TokenNotFound ex2
+            1: TokenNotFound ex2
     )
 
     /**
@@ -102,8 +93,7 @@ service TokenKeeper {
     **/
     void Revoke (1: TokenID id)
         throws (
-            1: InvalidRequest ex1,
-            2: TokenNotFound ex2
+            1: TokenNotFound ex2
     )
 
 }

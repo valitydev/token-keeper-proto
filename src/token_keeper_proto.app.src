@@ -1,0 +1,11 @@
+{application, token_keeper_proto, [
+    {description, "Thrift proto for token-keeper"},
+    {vsn, "0.1.0"},
+    {applications, [
+        kernel,
+        stdlib
+    ]},
+    {maintainers, [
+        "Konstantin Struzhkin <k.struzhkin@rbkmoney.com>"
+    ]}
+]}.

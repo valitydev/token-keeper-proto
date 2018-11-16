@@ -21,7 +21,7 @@ enum TokenStatus {
  * Набор ролей для сервиса.
 **/
 struct RoleStorage {
-    1: required List<string> roles
+    1: required list<string> roles
 }
 
 /**

@@ -28,8 +28,8 @@ struct RoleStorage {
  * Ссылка на party/shop.
 **/
 struct Reference {
-    1: optional string shop_id
-    2: optional string party_id
+    1: required string shop_id
+    2: required string party_id
 }
 
 /**
@@ -38,6 +38,8 @@ struct Reference {
 struct Scope {
     1: required Reference reference
     2: optional map<string, RoleStorage> resource_access
+    3: required string sub_id
+    4: required string sub_realm
 }
 
 struct AuthData {

@@ -10,6 +10,7 @@ include "base.thrift"
 typedef base.ID TokenID
 typedef string Token
 typedef base.Timestamp TokenExpTime
+typedef map<string, string> Metadata
 
 enum TokenStatus {
     active
@@ -37,7 +38,6 @@ struct Reference {
 struct Scope {
     1: required Reference reference
     2: optional map<string, RoleStorage> resource_access
-    3: required map<string, string> metadata
 }
 
 struct AuthData {
@@ -46,6 +46,7 @@ struct AuthData {
     3: required TokenStatus            status
     4: required TokenExpTime           exp_time
     5: required Scope                  scope
+    6: required Metadata               metadata
 }
 
 exception TokenNotFound {}
@@ -55,12 +56,12 @@ service TokenKeeper {
     /**
     * Создать новый оффлайн токен.
     **/
-    AuthData Create (1: Scope scope)
+    AuthData Create (1: Scope scope, 2: Metadata metadata)
 
     /**
     * Создать новый токен с ограниченным временем жизни.
     **/
-    AuthData CreateWithExpiration (1: Scope scope, 2: TokenExpTime exp_time)
+    AuthData CreateWithExpiration (1: Scope scope, 2: Metadata metadata, 3: TokenExpTime exp_time)
 
     /**
     * Получить данные токена по токену.

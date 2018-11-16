@@ -7,14 +7,14 @@ namespace erlang token_keeper
 
 include "base.thrift"
 
-typedef base.ID TokenID
+typedef base.ID AuthDataID
 typedef base.ID SubjectID
 typedef string Token
 typedef string Realm
-typedef base.Timestamp TokenExpTime
+typedef base.Timestamp AuthDataExpTime
 typedef map<string, string> Metadata
 
-enum TokenStatus {
+enum AuthDataStatus {
     active
     revoked
 }
@@ -43,17 +43,17 @@ struct Scope {
 }
 
 struct AuthData {
-    1: required TokenID                id
+    1: required AuthDataID             id
     2: required Token                  token
-    3: required TokenStatus            status
-    4: required TokenExpTime           exp_time
+    3: required AuthDataStatus         status
+    4: required AuthDataExpTime        exp_time
     5: required Scope                  scope
     6: required Metadata               metadata
     7: required SubjectID              subject_id
     8: required Realm                  realm
 }
 
-exception TokenNotFound {}
+exception AuthDataNotFound {}
 
 service TokenKeeper {
 
@@ -65,30 +65,30 @@ service TokenKeeper {
     /**
     * Создать новый токен с ограниченным временем жизни.
     **/
-    AuthData CreateWithExpiration (1: Scope scope, 2: Metadata metadata, 3: SubjectID subject_id, 4: Realm realm 5: TokenExpTime exp_time)
+    AuthData CreateWithExpiration (1: Scope scope, 2: Metadata metadata, 3: SubjectID subject_id, 4: Realm realm 5: AuthDataExpTime exp_time)
 
     /**
     * Получить данные токена по токену.
     **/
     AuthData GetByToken (1: Token token)
         throws (
-            1: TokenNotFound ex1
+            1: AuthDataNotFound ex1
     )
 
     /**
     * Получить данные токена по идентификатору.
     **/
-    AuthData Get (1: TokenID id)
+    AuthData Get (1: AuthDataID id)
         throws (
-            1: TokenNotFound ex1
+            1: AuthDataNotFound ex1
     )
 
     /**
     * Деактивировать оффлайн токен.
     **/
-    void Revoke (1: TokenID id)
+    void Revoke (1: AuthDataID id)
         throws (
-            1: TokenNotFound ex1
+            1: AuthDataNotFound ex1
     )
 
 }

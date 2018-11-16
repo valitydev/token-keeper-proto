@@ -7,8 +7,6 @@
 namespace java com.rbkmoney.token.keeper.base
 namespace erlang token_keeper_base
 
-include "msgpack.thrift"
-
 /** Идентификатор */
 typedef string ID
 

@@ -6,73 +6,72 @@ namespace java com.rbkmoney.token.keeper
 namespace erlang token_keeper
 
 include "base.thrift"
+include "proto/context.thrift"
 
 typedef base.ID AuthDataID
-typedef base.ID SubjectID
 typedef string Token
-typedef string Realm
-typedef base.Timestamp AuthDataExpTime
-typedef map<string, string> Metadata
+
+typedef context.ContextFragment ContextFragment
+
+typedef string MetadataNamespace
+typedef map<MetadataNamespace, map<string, string>> Metadata
 
 enum AuthDataStatus {
     active
     revoked
 }
 
-/**
- * Набор ролей для сервиса.
-**/
-struct RoleStorage {
-    1: required list<string> roles
-}
-
-/**
- * Ссылка на party/shop.
-**/
-struct Reference {
-    1: required string shop_id
-    2: required string party_id
-}
-
-/**
- * Информация связанная с токеном.
-**/
-struct Scope {
-    1: required Reference reference
-    2: optional map<string, RoleStorage> resource_access
-}
-
 struct AuthData {
-    1: required AuthDataID             id
+    /**
+     * Основной идентификатор авторизационных данных.
+     * Отсутствует у эфемерных токенов.
+     */
+    1: optional AuthDataID             id
     2: required Token                  token
     3: required AuthDataStatus         status
-    4: required AuthDataExpTime        exp_time
-    5: required Scope                  scope
-    6: required Metadata               metadata
-    7: required SubjectID              subject_id
-    8: required Realm                  realm
+    4: required ContextFragment        context
+    5: required Metadata               metadata
 }
 
+/**
+ * Токен не может быть обработан.
+ * Детали того, по каким причинам обработка невозможна, можно увидеть в аудит-логе. Причинами могут
+ * выступать, например:
+ *  - невозможность распарсить токен или его содержимое,
+ *  - неподдерживаемая схема криптографической подписи,
+ *  - неверная подпись,
+ *  - невозможность найти секретный ключ, которым токен был подписан,
+ *  - ...
+ */
+exception InvalidToken {}
+
 exception AuthDataNotFound {}
+exception AuthDataRevoked {}
 
 service TokenKeeper {
 
     /**
     * Создать новый оффлайн токен.
     **/
-    AuthData Create (1: Scope scope, 2: Metadata metadata, 3: SubjectID subject_id, 4: Realm realm)
+    AuthData Create (1: ContextFragment context, 2: Metadata metadata)
 
     /**
-    * Создать новый токен с ограниченным временем жизни.
+    * Создать новый эфемерный токен.
+    * Эфемерный токен не имеет идентификатора, потому что с ним не связаны никакие данные на
+    * стороне сервиса. Как следствие, эфемерный токен невозможно отозвать. В связи с этим
+    * клиентам рекомендуется обязательно задавать такие атрибуты, которые позволят контролировать
+    * время жизни токена.
     **/
-    AuthData CreateWithExpiration (1: Scope scope, 2: Metadata metadata, 3: SubjectID subject_id, 4: Realm realm 5: AuthDataExpTime exp_time)
+    AuthData CreateEphemeral (1: ContextFragment context, 2: Metadata metadata)
 
     /**
     * Получить данные токена по токену.
     **/
     AuthData GetByToken (1: Token token)
         throws (
-            1: AuthDataNotFound ex1
+            1: InvalidToken ex1
+            2: AuthDataNotFound ex2
+            3: AuthDataRevoked ex3
     )
 
     /**

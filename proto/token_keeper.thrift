@@ -13,8 +13,7 @@ typedef string Token
 
 typedef context.ContextFragment ContextFragment
 
-typedef string MetadataNamespace
-typedef map<MetadataNamespace, map<string, string>> Metadata
+typedef map<string, string> Metadata
 typedef string Authority
 
 enum AuthDataStatus {
@@ -73,7 +72,7 @@ service TokenKeeper {
     /**
     * Создать новый оффлайн токен.
     **/
-    AuthData Create (1: ContextFragment context, 2: Metadata metadata)
+    AuthData Create (1: AuthDataID id, 2: ContextFragment context, 3: Metadata metadata)
 
     /**
     * Создать новый эфемерный токен.

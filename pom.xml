@@ -58,9 +58,9 @@
             <version>1.3.2</version>
         </dependency>
         <dependency>
-            <groupId>com.rbkmoney</groupId>
+            <groupId>dev.vality</groupId>
             <artifactId>bouncer-proto</artifactId>
-            <version>1.3-1922076</version>
+            <version>1.30-3b5927d</version>
         </dependency>
     </dependencies>
 

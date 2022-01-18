@@ -4,7 +4,7 @@
  * commit id: b0806eb1d55646cbb937206ad8183e6d3f62719a
  */
 
-namespace java com.rbkmoney.token.keeper.base
+namespace java dev.vality.token.keeper.base
 namespace erlang token_keeper_base
 
 /** Идентификатор */

@@ -2,7 +2,7 @@
  * События для Machinegun.
  */
 
-namespace java com.rbkmoney.token.keeper.events
+namespace java dev.vality.token.keeper.events
 namespace erlang tk_events
 
 include "token_keeper.thrift"

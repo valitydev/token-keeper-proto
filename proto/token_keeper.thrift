@@ -2,7 +2,7 @@
  * Сервис хранения оффлайн токенов.
  */
 
-namespace java com.rbkmoney.token.keeper
+namespace java dev.vality.token.keeper
 namespace erlang token_keeper
 
 include "base.thrift"

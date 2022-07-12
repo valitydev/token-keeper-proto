@@ -3,7 +3,7 @@
  */
 
 namespace java dev.vality.token.keeper
-namespace erlang token_keeper
+namespace erlang tk.token.keeper
 
 include "base.thrift"
 include "proto/context.thrift"

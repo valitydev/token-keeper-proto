@@ -3,7 +3,7 @@
  */
 
 namespace java dev.vality.token.keeper.events
-namespace erlang tk_events
+namespace erlang tk.events
 
 include "token_keeper.thrift"
 

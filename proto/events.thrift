@@ -4,6 +4,7 @@
 
 namespace java dev.vality.token.keeper.events
 namespace erlang tk.events
+namespace elixir TokenKeeper.Thrift.Events
 
 include "token_keeper.thrift"
 

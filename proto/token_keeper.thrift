@@ -4,7 +4,7 @@
 
 namespace java dev.vality.token.keeper
 namespace erlang tk.token.keeper
-namespace elixir TokenKeeper.Thrift
+namespace elixir TokenKeeper.Thrift.Keeper
 
 include "base.thrift"
 include "proto/context.thrift"

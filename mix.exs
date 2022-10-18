@@ -8,7 +8,7 @@ defmodule TokenKeeperProto.MixProject do
       elixir: "~> 1.14",
       start_permanent: Mix.env() == :prod,
       deps: deps(),
-      compilers: [:thrift | Mix.compilers],
+      compilers: [:thrift, :woody | Mix.compilers],
       thrift: [
         files: Path.wildcard("proto/*.thrift"),
         include_paths: [Path.join(base_deps_path(), "bouncer_proto")]
@@ -21,14 +21,16 @@ defmodule TokenKeeperProto.MixProject do
   defp deps do
     [
       {:bouncer_proto, git: "https://github.com/valitydev/bouncer-proto.git", branch: "TD-421/mix-project"},
-      {:thrift, git: "https://github.com/pinterest/elixir-thrift", branch: "master"}
+      {:thrift, git: "https://github.com/pinterest/elixir-thrift", branch: "master"},
+      {:woody_ex, git: "https://github.com/valitydev/woody_ex.git", branch: "ft/thrift-elixir"}
     ]
   end
 
   defp base_deps_path do
+    alias Mix.{Project, ProjectStack}
     # Why
-    case Mix.ProjectStack.peek() do
-      nil -> Mix.Project.deps_path();
+    case ProjectStack.peek() do
+      nil -> Project.deps_path()
       project -> Path.join(Path.dirname(project[:file]), "deps")
     end
   end

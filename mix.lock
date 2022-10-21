@@ -1,5 +1,5 @@
 %{
-  "bouncer_proto": {:git, "https://github.com/valitydev/bouncer-proto.git", "8b03f5c40dbc654f677aeeb6ec96a46e5b0ef648", [branch: "TD-421/mix-project"]},
+  "bouncer_proto": {:git, "https://github.com/valitydev/bouncer-proto.git", "d21517db5085eec96902f681f326bfe01640c21f", [branch: "TD-421/mix-project"]},
   "cache": {:hex, :cache, "2.3.3", "b23a5fe7095445a88412a6e614c933377e0137b44ffed77c9b3fef1a731a20b2", [:rebar3], [], "hexpm", "44516ce6fa03594d3a2af025dd3a87bfe711000eb730219e1ddefc816e0aa2f4"},
   "certifi": {:hex, :certifi, "2.8.0", "d4fb0a6bb20b7c9c3643e22507e42f356ac090a1dcea9ab99e27e0376d695eba", [:rebar3], [], "hexpm", "6ac7efc1c6f8600b08d625292d4bbf584e14847ce1b6b5c44d983d273e1097ea"},
   "connection": {:hex, :connection, "1.1.0", "ff2a49c4b75b6fb3e674bfc5536451607270aac754ffd1bdfe175abe4a6d7a68", [:mix], [], "hexpm", "722c1eb0a418fbe91ba7bd59a47e28008a189d47e37e0e7bb85585a016b2869c"},
@@ -19,5 +19,5 @@
   "thrift": {:git, "https://github.com/pinterest/elixir-thrift", "3ab57fc65d60eea63381318f2741582b19c2dcda", [branch: "master"]},
   "unicode_util_compat": {:hex, :unicode_util_compat, "0.7.0", "bc84380c9ab48177092f43ac89e4dfa2c6d62b40b8bd132b1059ecc7232f9a78", [:rebar3], [], "hexpm", "25eee6d67df61960cf6a794239566599b09e17e668d3700247bc498638152521"},
   "woody": {:git, "https://github.com/valitydev/woody_erlang.git", "f7cab53fdba110f4858367fa56b4ab47d6ffdeec", [branch: "ft/codec-concept"]},
-  "woody_ex": {:git, "https://github.com/valitydev/woody_ex.git", "64982b1ae91659619b37ff375cdb4632749fd62c", [branch: "ft/thrift-elixir"]},
+  "woody_ex": {:git, "https://github.com/valitydev/woody_ex.git", "74b039ca07c33890b88ae3370ab99b96f9956708", [branch: "ft/thrift-elixir"]},
 }

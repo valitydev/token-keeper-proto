@@ -29,9 +29,9 @@ defmodule TokenKeeperProto.MixProject do
   defp base_deps_path do
     alias Mix.{Project, ProjectStack}
     # Why
-    case ProjectStack.peek() do
+    case ProjectStack.top_and_bottom() do
       nil -> Project.deps_path()
-      project -> Path.join(Path.dirname(project[:file]), "deps")
+      {_, project} -> Path.join(Path.dirname(project[:file]), "deps")
     end
   end
 end

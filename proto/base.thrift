@@ -6,6 +6,7 @@
 
 namespace java dev.vality.token.keeper.base
 namespace erlang tk.base
+namespace elixir TokenKeeper.Base
 
 /** Идентификатор */
 typedef string ID

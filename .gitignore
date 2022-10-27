@@ -12,3 +12,12 @@
 rebar3.crashdump
 include/*.hrl
 src/*.erl
+/cover/
+/deps/
+/doc/
+/.fetch
+erl_crash.dump
+*.ez
+/tmp/
+/lib/
+/target/

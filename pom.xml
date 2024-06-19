@@ -61,7 +61,7 @@
         <dependency>
             <groupId>dev.vality</groupId>
             <artifactId>bouncer-proto</artifactId>
-            <version>1.52-4e027e5</version>
+            <version>1.53-95560f1</version>
         </dependency>
     </dependencies>
 
@@ -84,7 +84,7 @@
                 <artifactId>thrift-maven-plugin</artifactId>
                 <version>0.10.0</version>
                 <configuration>
-                    <generator>java:fullcamel</generator>
+                    <generator>java:fullcamel,generated_annotations=suppress</generator>
                     <thriftSourceRoot>${project.basedir}/proto</thriftSourceRoot>
                     <thriftExecutable>${path_to_thrift}</thriftExecutable>
                 </configuration>

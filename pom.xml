@@ -28,9 +28,8 @@
 
     <developers>
         <developer>
-            <email>devs@vality.dev</email>
             <organization>Vality</organization>
-            <organizationUrl>https://vality.dev</organizationUrl>
+            <organizationUrl>https://github.com/valitydev</organizationUrl>
         </developer>
     </developers>
 
@@ -53,12 +52,6 @@
             <scope>provided</scope>
         </dependency>
         <dependency>
-            <groupId>jakarta.servlet</groupId>
-            <artifactId>jakarta.servlet-api</artifactId>
-            <version>5.0.0</version>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
             <groupId>dev.vality</groupId>
             <artifactId>bouncer-proto</artifactId>
             <version>1.53-95560f1</version>
@@ -78,7 +71,6 @@
             </resource>
         </resources>
         <plugins>
-            <!-- THRIFT -->
             <plugin>
                 <groupId>org.apache.thrift</groupId>
                 <artifactId>thrift-maven-plugin</artifactId>
@@ -101,7 +93,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-shade-plugin</artifactId>
-                <version>3.4.1</version>
+                <version>3.6.0</version>
                 <executions>
                     <execution>
                         <phase>package</phase>
@@ -111,8 +103,8 @@
                         <configuration>
                             <relocations>
                                 <relocation>
-                                    <pattern>dev.vality.damsel</pattern>
-                                    <shadedPattern>dev.vality.damsel.v${commit.number}</shadedPattern>
+                                    <pattern>dev.vality.token.keeper</pattern>
+                                    <shadedPattern>dev.vality.token.keeper.v${commit.number}</shadedPattern>
                                 </relocation>
                             </relocations>
                             <shadedArtifactAttached>true</shadedArtifactAttached>
@@ -123,5 +115,4 @@
             </plugin>
         </plugins>
     </build>
-
 </project>

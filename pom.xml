@@ -52,9 +52,14 @@
             <scope>provided</scope>
         </dependency>
         <dependency>
+            <groupId>jakarta.annotation</groupId>
+            <artifactId>jakarta.annotation-api</artifactId>
+            <version>3.0.0</version>
+        </dependency>
+        <dependency>
             <groupId>dev.vality</groupId>
             <artifactId>bouncer-proto</artifactId>
-            <version>1.53-95560f1</version>
+            <version>1.55-ef7403f</version>
         </dependency>
     </dependencies>
 
@@ -76,7 +81,7 @@
                 <artifactId>thrift-maven-plugin</artifactId>
                 <version>0.10.0</version>
                 <configuration>
-                    <generator>java:fullcamel,generated_annotations=suppress</generator>
+                    <generator>java:fullcamel,jakarta_annotations</generator>
                     <thriftSourceRoot>${project.basedir}/proto</thriftSourceRoot>
                     <thriftExecutable>${path_to_thrift}</thriftExecutable>
                 </configuration>
